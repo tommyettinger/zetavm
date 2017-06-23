@@ -11,6 +11,8 @@ def bench(benchPath):
     startTime = time.time()
 
     benchCmd = './zeta %s' % benchPath
+    if os.name == 'nt':
+        benchCmd = 'zeta.exe %s' % benchPath
     pipe = Popen(benchCmd, shell=True, stdout=PIPE, stderr=PIPE)
 
     # Wait until the benchmark terminates
@@ -52,7 +54,9 @@ def runBenchs():
         'benchmarks/plush_parser.zim',
         'benchmarks/saw_wave.pls',
         'benchmarks/sine_wave.pls',
-        'benchmarks/func_audio.pls'
+        'benchmarks/func_audio.pls',
+        'benchmarks/random_int_1m.pls',
+        'benchmarks/random_float_1m.pls'
     ]
 
     timeVals = []
