@@ -4,7 +4,7 @@
 var random = import "std/random/0";
 
 var rng = random.newRNG(31337);
-var grng = random.globalRNG;
+var grng = random.newRNG([1337, 42, 99999, 777, 21]);
 
 var cardValues = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"];
 
@@ -12,7 +12,7 @@ var cardSuits = ["Hearts", "Clubs", "Diamonds", "Spades"];
 
 var card = function()
 {
-   return grng:select(cardValues) + " of " + grng:select(cardSuits);
+   return grng:choice(cardValues) + " of " + grng:choice(cardSuits);
 };
 
 print("Trying random ints in the full range using rng:fullInt():");
@@ -52,16 +52,18 @@ for (var i = 0; i < 7; i += 1)
 }
 output(card());
 
-var rng1 = random.newRNG(1234567);
+rng:reseed(1234567);
 var rng2 = random.newRNG(1234567);
 
 for (var i = 0; i < 500; i += 1)
 {
-    assert(rng1:fullInt() == rng2:fullInt(), "Identical seeds must not produce different sequences.");
+    assert(rng:fullInt() == rng2:fullInt(), "Identical seeds must not produce different sequences.");
 }
 for (var i = 0; i < 500; i += 1)
 {
-    assert(rng1:smallFloat() == rng2:smallFloat(), "Identical seeds must not produce different sequences.");
+    assert(rng:smallFloat() == rng2:smallFloat(), "Identical seeds must not produce different sequences.");
 }
+output("\nRandom boolean value: ");
+print(rng:boolean());
 
-print("\nDone with random number generation.");
+print("Done with random number generation.");

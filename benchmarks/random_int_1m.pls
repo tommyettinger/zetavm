@@ -1,7 +1,7 @@
 #language "lang/plush/0"
 var random = import "std/random/0";
 
-var rng = random.globalRNG;
+var rng = random.newRNG(1337);
 
 var test = function ()
 {
